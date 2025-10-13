@@ -1,4 +1,4 @@
-from src.logic import log_activity, statistics, add_new_category
+from src.logic import log_activity, statistics, add_new_category, add_new_subcategory
 from src.storage import load_categories, load_from_data
 from src.ui import pick_category, pick_doings, how_much_value, show_statistics
 
@@ -6,11 +6,12 @@ from src.ui import pick_category, pick_doings, how_much_value, show_statistics
 def main():
 
     while True:
-        print("Tracker by nixie -- pre-alpha(0.1.3)")
+        print("Tracker by nixie -- pre-alpha(0.1.4)")
         print("\n1. Записать активность")
         print("2. Посмотреть статистику")
         print("3. Добавить новую категорию")
-        print("4. Выход")
+        print("4. Добавить новую подкатегорию")
+        print("5. Выход")
 
         choice = input("\nВыберите действие: ")
 
@@ -35,6 +36,10 @@ def main():
         elif choice == "3":
             add_new_category(input("Название категории: "))
         elif choice == "4":
+            categories = load_categories()
+            category = pick_category(categories)
+            add_new_subcategory(category ,input("Название подкатегории: "))
+        elif choice == "5":
             quit()
         else:
             print("Неверный выбор")

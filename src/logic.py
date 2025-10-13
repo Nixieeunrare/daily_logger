@@ -62,3 +62,10 @@ def add_new_category(category: str):
         data[category] = []
         with open(DOINGS_FILE_PATH, 'w', encoding='utf-8') as file:
             json.dump(data, file, indent=2, ensure_ascii=False)
+
+def add_new_subcategory(category: str, subcategory: str):
+    with open(DOINGS_FILE_PATH, 'r', encoding='utf-8') as file:
+        data = json.load(file)
+        data[category].append(subcategory)
+        with open(DOINGS_FILE_PATH, 'w', encoding='utf-8') as file:
+            json.dump(data, file, indent=2, ensure_ascii=False)
