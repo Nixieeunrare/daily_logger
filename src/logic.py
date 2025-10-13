@@ -1,5 +1,9 @@
 import time
+import json
+import os
 from src.storage import load_from_data, save_to_data
+
+DOINGS_FILE_PATH = os.path.join("config", "doings.json")
 
 
 def log_activity(doing, value):
@@ -51,3 +55,10 @@ def statistics(doing: str, data: list) -> dict:
         "last_value": values[-1],
         "today_value": today_value,
     }
+
+def add_new_category(category: str):
+    with open(DOINGS_FILE_PATH, 'r', encoding='utf-8') as file:
+        data = json.load(file)
+        data[category] = []
+        with open(DOINGS_FILE_PATH, 'w', encoding='utf-8') as file:
+            json.dump(data, file, indent=2, ensure_ascii=False)
