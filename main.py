@@ -1,48 +1,37 @@
-from src.logic import log_activity, statistics, add_new_category, add_new_subcategory
-from src.storage import load_categories, load_from_data
-from src.ui import pick_category, pick_doings, how_much_value, show_statistics
+from src.storage import init_project
+from src.ui import (
+    show_menu,
+    add_log_flow,
+    add_category_flow,
+    add_subcategory_flow,
+    show_plot_flow,
+    show_statistics_flow,
+    Menu,
+)
 
 
 def main():
+    init_project()
 
     while True:
-        print("Tracker by nixie -- pre-alpha(0.1.4)")
-        print("\n1. Записать активность")
-        print("2. Посмотреть статистику")
-        print("3. Добавить новую категорию")
-        print("4. Добавить новую подкатегорию")
-        print("5. Выход")
+        show_menu()
 
         choice = input("\nВыберите действие: ")
 
-        if choice == "1":
-            categories = load_categories()
-            category = pick_category(categories)
-            doing = pick_doings(categories, category)
-            value = how_much_value()
-
-            log_activity(doing, value)
-
-            again = input("Еще запись? (y/n): ").lower()
-            if again not in ("y", "yes", "да"):
-                break
-        elif choice == "2":
-            categories = load_categories()
-            category = pick_category(categories)
-            doing = pick_doings(categories, category)
-            data = load_from_data()
-            stats = statistics(doing, data)
-            show_statistics(doing, stats)
-        elif choice == "3":
-            add_new_category(input("Название категории: "))
-        elif choice == "4":
-            categories = load_categories()
-            category = pick_category(categories)
-            add_new_subcategory(category ,input("Название подкатегории: "))
-        elif choice == "5":
+        if choice == Menu.ADD_NEW_DOING_LOG:
+            add_log_flow()
+        elif choice == Menu.ADD_NEW_CATEGORY:
+            add_category_flow()
+        elif choice == Menu.ADD_NEW_SUBCATEGORY:
+            add_subcategory_flow()
+        elif choice == Menu.SHOW_STATISTIC:
+            show_statistics_flow()
+        elif choice == Menu.PLOT_VISUALIZATION:
+            show_plot_flow()
+        elif choice == Menu.QUIT:
             quit()
         else:
-            print("Неверный выбор")
+            print("Такого действия не существует!")
 
 
 if __name__ == "__main__":
